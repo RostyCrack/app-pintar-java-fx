@@ -2,10 +2,15 @@ package com.example.apppintar2;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class HelloController {
     @FXML
     private Label welcomeText;
+    @FXML
+    private Canvas Canvas;
 
 
     @FXML
