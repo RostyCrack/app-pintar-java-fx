@@ -12,7 +12,9 @@ public class HelloController {
     @FXML
     private Canvas Canvas;
 
-
+    GraphicsContext gc = Canvas.getGraphicsContext2D();
+    
+    gc.strokeRect(0, 0, Canvas.getWidth(), Canvas.getHeight());
     @FXML
     protected void onHelloButtonClick() {
         welcomeText.setText("Welcome to JavaFX Application!");
