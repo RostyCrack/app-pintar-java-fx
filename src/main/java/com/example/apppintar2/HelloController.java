@@ -28,7 +28,7 @@ public class HelloController {
             savedPoint = clickPoint;
         } else {
             Line line = new Line(clickPoint.getX(),clickPoint.getY(),savedPoint.getX(),savedPoint.getY());
-            gc.strokeLine(clickPoint.getX(),clickPoint.getY(),savedPoint.getX(),savedPoint.getY());
+            gc.strokeLine(line.getX1(),line.getY1(),line.getX2(),line.getY2());
 
             savedPoint = null;
         }
