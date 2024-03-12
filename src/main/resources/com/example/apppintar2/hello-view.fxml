@@ -20,6 +20,7 @@
 
 
     <HBox>
+
             children = <Button text="Say 'Hello World'" onAction="#undo"/>
             <Button text="Clear" onAction="#redo"/>
     </HBox>
