@@ -16,7 +16,7 @@
       </ImageView>
       <Pane fx:id="paneDibujo" layoutX="14.0" layoutY="14.0" prefHeight="519.0" prefWidth="583.0" style="-fx-border-color: #000000; -fx-border-width: 2; -fx-background-color: #ffffffff; -fx-opacity: 50%;">
          <children>
-            <Canvas height="519.0" width="583.0" />
+            <Canvas fx:id="Canvas" height="519.0" onMouseDragEntered="#EnterDrag" onMouseDragExited="#ExitDrag" width="583.0" />
          </children></Pane>
       <Button fx:id="btnUndo" layoutX="87.0" layoutY="541.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="113.0" text="UNDO" textFill="#ee0000" />
       <Button fx:id="btnRedo" layoutX="421.0" layoutY="541.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="113.0" text="REDO" textFill="#13bf18" />
