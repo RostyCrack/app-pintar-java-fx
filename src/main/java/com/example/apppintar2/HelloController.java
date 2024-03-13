@@ -19,45 +19,51 @@ public class HelloController implements Initializable {
     private Canvas paneDibujo;
     private List<Line> undoList = new ArrayList<>();
 
+    private GraphicsContext gc;
+
     private List<Line> redoList = new ArrayList<>();
 
-    @FXML
-    private Label welcomeText;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Get the GraphicsContext of the Canvas
-        GraphicsContext gc = paneDibujo.getGraphicsContext2D();
-
+        gc = paneDibujo.getGraphicsContext2D();
         // Drawing a line
         gc.setStroke(javafx.scene.paint.Color.BLACK); // Set line color
         gc.setLineWidth(2); // Set line width
-        gc.strokeLine(50, 50, 350, 350); // Draw line from (50,50) to (350,350)
-        Line line = new Line(50,50,350,350);
+        gc.strokeLine(50, 50, 350, 350);
+        gc.strokeLine(60,60,400,400);
+        Line line = new Line(60,60,400,400);// Draw line from (50,50) to (350,350)
+        Line line2 = new Line(60,60,400,400);
         undoList.add(line);
+        undoList.add(line2);
     }
 
     @FXML
     protected void undo() {
-        welcomeText.setText("Undo");
-        Canvas newCanvas = new Canvas(paneDibujo.getWidth(), paneDibujo.getHeight());
-        GraphicsContext newGc = newCanvas.getGraphicsContext2D();
+        clearCanvas();
         for (Line line: undoList) {
-            newGc.strokeLine(line.getX1(), line.getX2(), line.getY1(), line.getY2());
+            undoList.remove(line);
+            System.out.println("dibujando linea");
+            gc.strokeLine(line.getX1(), line.getX2(), line.getY1(), line.getY2());
             redoList.add(line);
         }
-        paneDibujo = newCanvas;
     }
 
     @FXML
     protected void redo(){
-        welcomeText.setText("Redo");
-        Canvas newCanvas = new Canvas(paneDibujo.getWidth(), paneDibujo.getHeight());
-        GraphicsContext newGc = newCanvas.getGraphicsContext2D();
+        clearCanvas();
         for (Line line: redoList) {
-            newGc.strokeLine(line.getX1(), line.getX2(), line.getY1(), line.getY2());
-            redoList.add(line);
+            System.out.println("Dibujando linea");
+            gc.setStroke(javafx.scene.paint.Color.BLACK); // Set line color
+            gc.strokeLine(line.getX1(), line.getX2(), line.getY1(), line.getY2());
+            undoList.add(line);
         }
+
     }
 
+    private void clearCanvas() {
+        GraphicsContext gc = paneDibujo.getGraphicsContext2D();
+        gc.clearRect(0, 0, paneDibujo.getWidth(), paneDibujo.getHeight());
+    }
 }
