@@ -47,6 +47,7 @@ public class HelloController implements Initializable {
             if (undoList.size() == 1) {
                 redoList.add(undoList.get(0));
                 undoList.remove(0);
+
             }else{
                 Line removedLine = undoList.get(undoList.size() - 1);
                 redoList.add(removedLine);
