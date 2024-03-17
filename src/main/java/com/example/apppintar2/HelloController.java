@@ -5,37 +5,51 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.ResourceBundle;
+import javafx.geometry.Point2D;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 
 public class HelloController implements Initializable {
 
     @FXML
     private Canvas paneDibujo;
     private final List<Line> undoList = new ArrayList<>();
-
+    private Point2D savedPoint = null;
     private GraphicsContext gc;
 
     private final List<Line> redoList = new ArrayList<>();
 
+    @FXML
+    private void handlePrimaryClick(MouseEvent event) {
+
+        Point2D clickPoint = new Point2D(event.getX(), event.getY());
+
+
+        if (savedPoint == null) {
+            savedPoint = clickPoint;
+        } else {
+            Line line = new Line(clickPoint.getX() ,clickPoint.getY(), savedPoint.getX(),savedPoint.getY());
+            gc.setStroke(Color.RED);
+            gc.strokeLine(line.getX1(),line.getY1(),line.getX2(),line.getY2());
+            undoList.add(line);
+            redoList.clear();
+
+            savedPoint = null;
+        }
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Get the GraphicsContext of the Canvas
         gc = paneDibujo.getGraphicsContext2D();
         // Drawing a line
-        gc.setStroke(javafx.scene.paint.Color.BLACK); // Set line color
-        gc.setLineWidth(2); // Set line width
-        gc.strokeLine(50, 50, 350, 350); // First line
-        gc.strokeLine(60, 20, 40, 20); // Second line
-        Line line = new Line(50,50,350,350);// Draw line from (50,50) to (350,350)
-        Line line2 = new Line(60,20,40,20);
-        undoList.add(line);
-        undoList.add(line2);
+        gc.setStroke(javafx.scene.paint.Color.RED); // Set line color
+        gc.setLineWidth(4); // Set line width
     }
 
     @FXML
@@ -56,7 +70,7 @@ public class HelloController implements Initializable {
             ListIterator<Line> iterator = undoList.listIterator(undoList.size());
             while (iterator.hasPrevious()) {
                 Line line = iterator.previous();
-                gc.setStroke(javafx.scene.paint.Color.BLACK); // Set line color
+                gc.setStroke(javafx.scene.paint.Color.RED); // Set line color
                 gc.strokeLine(line.getX1(), line.getY1(), line.getX2(), line.getY2());
             }
         }
@@ -68,7 +82,7 @@ public class HelloController implements Initializable {
             // Get the last line from the redoList
             Line line = redoList.get(redoList.size() - 1);
             // Set the stroke color to black
-            gc.setStroke(javafx.scene.paint.Color.BLACK);
+            gc.setStroke(javafx.scene.paint.Color.RED);
             // Draw the line on the canvas using its coordinates
             gc.strokeLine(line.getX1(), line.getY1(), line.getX2(), line.getY2());
             // Add the line to the undoList for possible undo operation
