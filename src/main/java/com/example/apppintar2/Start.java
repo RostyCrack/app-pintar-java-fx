@@ -7,10 +7,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class HelloApplication extends Application {
+public class Start extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("EditorFXML.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Start.class.getResource("vista/EditorFXML.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 610, 600);
         stage.setTitle("Appintar!");
         stage.setScene(scene);
